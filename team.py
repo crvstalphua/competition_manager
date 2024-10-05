@@ -1,5 +1,5 @@
 class Team:
-    def _init_(self, name, reg_date, grp_num):
+    def __init__(self, name, reg_date, grp_num):
         self.name = name
         self.reg_date = reg_date
         self.grp_num = grp_num
