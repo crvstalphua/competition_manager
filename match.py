@@ -43,3 +43,8 @@ class Match:
         
     def get_match_details(self):
         return self.team_1 + ' ' + self.team_2 + ' ' + str(self.goals_1) + ' ' + str(self.goals_2)
+
+    @classmethod
+    def delete_all_matches(cls):
+        matches = cls.get_matches()
+        matches.clear()

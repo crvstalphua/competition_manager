@@ -96,7 +96,7 @@ def edit_team():
     while True:
         user_input = input()
         line = user_input.split()
-
+        # require some form of input validation
         try: 
             team_to_edit = team.Team.get_team(line[0])
             old_details = team_to_edit.name + ' ' + team_to_edit.reg_date + ' ' + str(team_to_edit.grp_num)
@@ -109,6 +109,20 @@ def edit_team():
         except:
             print('No such team found, please check for errors and re-enter team')
 
+def clear():
+    print('Enter "clear" if you want to delete all information:')
+
+    while True:
+        user_input = input()
+        if user_input == 'clear':
+            team.Team.delete_all_teams()
+            match.Match.delete_all_matches()
+            team.Team.update_rankings()
+            print('Data cleared')
+            break
+        else:
+            print('Error. Re-enter "clear" to remove all data.')
+            continue
         
 
             

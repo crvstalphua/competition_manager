@@ -92,4 +92,9 @@ class Team:
             matches += '- ' + match.get_match_details() + '\n'
         return 'Team name: ' + team.name + '\n' + 'Registration date: ' + team.reg_date + '\n' + 'Group number: ' + str(team.grp_num) + '\n' + 'Matches played: ' + '\n' + matches + 'Outcome: ' + outcome
         
-
+    @classmethod
+    def delete_all_teams(cls):
+        teams = cls.get_teams()
+        teams.clear()
+        groups = cls.get_groups()
+        groups.clear()
