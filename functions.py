@@ -13,6 +13,7 @@ def input_teams():
         for line in lines:
             line = line.split()
             team.Team(line[0], line[1], line[2])
+            team.Team.update_rankings()
 
 def input_matches():
     print('Add your matches in the format: <team 1 name> <team 2 name> <team 1 goals scored> <team 2 goals scored>: ')
@@ -63,6 +64,36 @@ def display_team():
         except:
             print('No such team found, please check for errors and re-enter name')
 
+def edit_match():
+    print('Enter new match information: ')
+    while True:
+        user_input = input()
+        try:
+            lines = user_input.split('\n')
+            for line in lines:
+                line = line.split()
+
+            old_match = match.Match.get_match(line[0], line[1])
+            team_1 = team.Team.get_team(line[0])
+            team_2 = team.Team.get_team(line[1])
+            old_details = old_match.get_match_details()
+
+            team_1.remove_match(old_match)
+            team_2.remove_match(old_match)
+            match.Match.delete_match(old_match)
+
+            new_match = match.Match(line[0], line[1], int(line[2]), int(line[3]))
+            new_details = new_match.get_match_details()
+
+            team_1.add_match(new_match)
+            team_2.add_match(new_match)
+            team.Team.update_rankings()
+            print('Match Updated: ' + old_details + ' to ' + new_details)
+            break
+        except:
+            print('No such match found, please check for errors and re-enter match')
+
+        
 
             
             
