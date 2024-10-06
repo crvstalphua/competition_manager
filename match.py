@@ -20,3 +20,6 @@ class Match:
                 return match
             elif match.team_2 == team_1 and match.team_1 == team_2:
                 return match
+    
+    def get_match_details(self):
+        return self.team_1 + ' ' + self.team_2 + ' ' + str(self.goals_1) + ' ' + str(self.goals_2)
