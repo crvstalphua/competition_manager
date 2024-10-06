@@ -25,22 +25,15 @@ class Team:
 
     def add_match(self, match):
         self.matches.append(match)
-        if match.team_1 == self.name:
-            self.goals += match.goals_1
-            if match.goals_1 > match.goals_2:
-                self.wins += 1
-            elif match.goals_1 < match.goals_2:
-                self.losses += 1
-            else: 
-                self.draws += 1            
+        goals, result = match.get_result(self)
+        self.goals += goals
+        if result == 0:
+            self.draws += 1
+        elif result == 1:
+            self.wins += 1
         else:
-            self.goals += match.goals_2
-            if match.goals_2 > match.goals_1:
-                self.wins += 1
-            elif match.goals_2 < match.goals_1:
-                self.losses += 1
-            else: 
-                self.draws += 1   
+            self.losses += 1
+        self.update_score()
 
     def update_score(self):
         self.score = self.wins * 3 + self.draws * 1 + self.losses * 0
@@ -77,7 +70,7 @@ class Team:
             outcome = 'Qualified'
         matches = ''
         for match in team.matches:
-            matches += '- ' + match.display_match() + '\n'
+            matches += '- ' + match.get_match_details() + '\n'
         return 'Team name: ' + team.name + '\n' + 'Registration date: ' + team.reg_date + '\n' + 'Group number: ' + str(team.grp_num) + '\n' + 'Matches played: ' + '\n' + matches + 'Outcome: ' + outcome
         
 

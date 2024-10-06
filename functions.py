@@ -30,9 +30,7 @@ def input_matches():
             team_2 = team.Team.get_team(line[1])
 
             team_1.add_match(new_match)
-            team_1.update_score()
             team_2.add_match(new_match)
-            team_2.update_score()
             team.Team.update_rankings()
 
 def display_rankings():
@@ -41,17 +39,17 @@ def display_rankings():
         for x in range(len(teams)):
             if x < 4:
                 print('#' + str(teams[x].rank) + ' ' + teams[x].name + ' (Qualified)')
-                '''
+                
                 print('score: ' + str(teams[x].score) + ' goals: ' + str(teams[x].goals) + 
                       ' alt_score: ' + str(teams[x].alt_score) + ' date: ' + str(teams[x].reg_date))
-                '''
+                
                 
             else:
                 print('#' + str(teams[x].rank) + ' ' + teams[x].name) 
-                '''
+                
                 print('score: ' + str(teams[x].score) + ' goals: ' + str(teams[x].goals) + 
                       ' alt_score: ' + str(teams[x].alt_score) + ' date: ' + str(teams[x].reg_date))
-                '''
+                
         print('\n')
 
 def display_team():
@@ -65,6 +63,6 @@ def display_team():
         except:
             print('No such team found, please check for errors and re-enter name')
 
-            
+
             
             
