@@ -21,5 +21,25 @@ class Match:
             elif match.team_2 == team_1 and match.team_1 == team_2:
                 return match
     
+    def get_result(self, team):
+        if team.name == self.team_1:
+            if self.goals_1 > self.goals_2:
+                return self.goals_1, 1
+            elif self.goals_1 < self.goals_2:
+                return self.goals_1, -1
+            else:
+                return self.goals_1, 0
+        elif team.name == self.team_2:
+            if self.goals_2 > self.goals_1:
+                return self.goals_2, 1
+            elif self.goals_2 < self.goals_1:
+                return self.goals_2, -1
+            else:
+                return self.goals_2, 0
+    
+    @classmethod
+    def delete_match(cls, match):
+        cls.__matches.remove(match)
+        
     def get_match_details(self):
         return self.team_1 + ' ' + self.team_2 + ' ' + str(self.goals_1) + ' ' + str(self.goals_2)

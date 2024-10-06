@@ -35,6 +35,19 @@ class Team:
             self.losses += 1
         self.update_score()
 
+    def remove_match(self, match):
+        self.matches.remove(match)
+        goals, result = match.get_result(self)
+        self.goals -= goals
+        if result == 0:
+            self.draws -= 1
+        elif result == 1:
+            self.wins -= 1
+        else:
+            self.losses -= 1
+        self.update_score()
+    
+
     def update_score(self):
         self.score = self.wins * 3 + self.draws * 1 + self.losses * 0
         self.alt_score = self.wins * 5 + self.draws * 3 + self.losses * 1
