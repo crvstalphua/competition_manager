@@ -1,8 +1,9 @@
-from functions import input_teams
+from functions import input_teams, input_matches
+import team
 
 def main():
-    teams = list()
-    teams += input_teams()
+    input_teams()
+    input_matches()
         
 if __name__ == '__main__':
     main()
