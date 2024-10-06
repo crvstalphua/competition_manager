@@ -1,4 +1,6 @@
 class Team:
+    __teams = list()
+
     def __init__(self, name, reg_date, grp_num):
         self.name = name
         self.reg_date = reg_date
@@ -9,10 +11,12 @@ class Team:
         self.draws = 0
         self.goals = 0
 
+        Team.__teams.append(self)
+
     def add_match(self, match):
         self.matches.append(match)
         if match.team_1 == self:
-            self.goals = match.goals_1
+            self.goals += match.goals_1
             if match.goals_1 > match.goals_2:
                 self.wins += 1
             elif match.goals_1 < match.goals_2:
@@ -20,11 +24,21 @@ class Team:
             else: 
                 self.draws += 1            
         else:
-            self.goals = match.goals_2
+            self.goals += match.goals_2
             if match.goals_2 > match.goals_1:
                 self.wins += 1
             elif match.goals_2 < match.goals_1:
                 self.losses += 1
             else: 
                 self.draws += 1   
+
+    @classmethod
+    def get_teams(cls):
+        return cls.__teams
+    
+    @classmethod
+    def get_team(cls, name):
+        for team in cls.__teams:
+            if team.name == name:
+                return team
 
