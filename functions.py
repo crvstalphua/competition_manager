@@ -68,11 +68,8 @@ def edit_match():
     print('Enter new match information: ')
     while True:
         user_input = input()
-        try:
-            lines = user_input.split('\n')
-            for line in lines:
-                line = line.split()
-
+        line = user_input.split()
+        try: 
             old_match = match.Match.get_match(line[0], line[1])
             team_1 = team.Team.get_team(line[0])
             team_2 = team.Team.get_team(line[1])
@@ -92,6 +89,25 @@ def edit_match():
             break
         except:
             print('No such match found, please check for errors and re-enter match')
+
+
+def edit_team():
+    print('Enter new team information (note that team name is not editable): ')
+    while True:
+        user_input = input()
+        line = user_input.split()
+
+        try: 
+            team_to_edit = team.Team.get_team(line[0])
+            old_details = team_to_edit.name + ' ' + team_to_edit.reg_date + ' ' + str(team_to_edit.grp_num)
+            team_to_edit.edit_team(line[0], line[1], line[2])
+            new_details = team_to_edit.name + ' ' + team_to_edit.reg_date + ' ' + str(team_to_edit.grp_num)
+
+            team.Team.update_rankings()
+            print('Team Updated: ' + old_details + ' to ' + new_details)
+            break
+        except:
+            print('No such team found, please check for errors and re-enter team')
 
         
 

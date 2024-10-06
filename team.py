@@ -46,11 +46,17 @@ class Team:
         else:
             self.losses -= 1
         self.update_score()
-    
 
     def update_score(self):
         self.score = self.wins * 3 + self.draws * 1 + self.losses * 0
         self.alt_score = self.wins * 5 + self.draws * 3 + self.losses * 1
+
+    def edit_team(self, name, reg_date, grp_num):
+        self.reg_date = reg_date
+        if self.grp_num != grp_num:
+            Team.__groups[self.grp_num].remove(self)
+            Team.__groups[grp_num].append(self)
+            self.grp_num = grp_num
 
     @classmethod
     def update_rankings(cls):
