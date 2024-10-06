@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Team:
     __teams = list()
     __groups = dict()
@@ -13,6 +15,7 @@ class Team:
         self.goals = 0
         self.score = 0
         self.alt_score = 0
+        self.rank = 0
 
         Team.__teams.append(self)
         if grp_num not in Team.__groups:
@@ -44,6 +47,15 @@ class Team:
         self.alt_score = self.wins * 5 + self.draws * 3 + self.losses * 1
 
     @classmethod
+    def update_rankings(cls):
+        ordered_grps = dict(sorted(Team.get_groups().items()))
+        for grps, teams in ordered_grps.items():
+            ordered_teams = sorted(teams, key = lambda x: (-x.score, -x.goals, -x.alt_score, datetime.strptime(x.reg_date, "%d/%m")))
+            cls.__groups[grps] = ordered_teams
+            for x in range(len(ordered_teams)):
+                    ordered_teams[x].rank = x + 1
+
+    @classmethod
     def get_teams(cls):
         return cls.__teams
     
@@ -56,4 +68,16 @@ class Team:
     @classmethod
     def get_groups(cls):
         return cls.__groups
+    
+    @classmethod
+    def get_team_details(cls, name):
+        team = Team.get_team(name)
+        outcome = 'Did not qualify'
+        if team.rank <= 4: 
+            outcome = 'Qualified'
+        matches = ''
+        for match in team.matches:
+            matches += '- ' + match.display_match() + '\n'
+        return 'Team name: ' + team.name + '\n' + 'Registration date: ' + team.reg_date + '\n' + 'Group number: ' + str(team.grp_num) + '\n' + 'Matches played: ' + '\n' + matches + 'Outcome: ' + outcome
+        
 
