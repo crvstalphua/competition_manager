@@ -4,13 +4,8 @@ from datetime import datetime
 import logging
 import tkinter as tk
 
-def switch_frames(frame_1, frame_2):
-    frame_1.pack_forget()
-    frame_2.pack(fill='both')
-
-
+# adding new teams
 def input_teams(event, text, log):
-    print('Add your teams in the format: <team name> <registration date> <group number>: ')
     logging.info('Adding teams from input...')
 
     # get text input
@@ -21,6 +16,7 @@ def input_teams(event, text, log):
     text.delete('1.0', 'end')
     log.delete('1.0', 'end')
 
+    # iterating through each line in case of multi-line input
     for line in teams:
             full_line = line
             line = line.split()
@@ -49,20 +45,20 @@ def input_teams(event, text, log):
                     error = f'Error: {full_line} - Invalid datetime: {line[1]} format should be "dd/mm"'
                     logging.info(f'Error adding teams due to incorrect date format: {full_line}')
             
+            # create team if no error, skip otherwise
             if error:
                 team_info += error + '\n'
-                print(f'{error}\n')
             if not error:
                 team.Team(line[0], line[1], line[2])
                 team_info += f'Added team: {line[0]}, Registration Date: {line[1]}, Group Number: {line[2]} \n'
                 team.Team.update_rankings()
     
-    print(team_info)
     logging.info(f'Adding process completed \n{team_info}')
     log.insert(tk.END, team_info)
 
+
+# adding new matches
 def input_matches(event, text, log):
-    print('Add your matches in the format: <team 1 name> <team 2 name> <team 1 goals scored> <team 2 goals scored>: ')
     logging.info('Adding matches from input...')
 
     # get text input
@@ -73,6 +69,7 @@ def input_matches(event, text, log):
     text.delete('1.0', 'end')
     log.delete('1.0', 'end')
     
+    # iterating through each line in case of multi-line input
     for line in matches:
             full_line = line
             line = line.split()
@@ -111,9 +108,9 @@ def input_matches(event, text, log):
                 error = f'Error: {full_line} - Match cannot be added as {line[0]} and {line[1]} are not from the same group'
                 logging.info(f'Error adding matches due to non-matching groups: {full_line}')
 
+            # create match if no error, skip otherwise
             if error:
                 match_info += error + '\n'
-                print(f'{error} \n')
 
             if not error:
                 new_match = match.Match(line[0], line[1], int(line[2]), int(line[3]))
@@ -122,43 +119,40 @@ def input_matches(event, text, log):
                 team_1 = team.Team.get_team(line[0])
                 team_2 = team.Team.get_team(line[1])
 
+                # add match into relevant teams' list
                 team_1.add_match(new_match)
                 team_2.add_match(new_match)
                 team.Team.update_rankings()
 
-    print(match_info)
     logging.info(f'Adding matches complete \n{match_info}')
     log.insert(tk.END, match_info)
 
+
+# display rankings of teams in each group
 def display_rankings(log):
+    team.Team.update_rankings()
     logging.info(f'Displaying rankings...')
     log.delete('1.0', 'end')
 
     output = ''
-    for grps, teams in team.Team.get_groups().items():
-        print(f'GROUP {str(grps)} RANKING')
+    groups = dict(sorted(team.Team.get_groups().items()))
+    for grps, teams in groups.items():
         output += f'GROUP {str(grps)} RANKING \n\n'
         for x in range(len(teams)):
+            # if team is rank 4 or below, qualified
             if  x < 4:
-                print(f'#{str(teams[x].rank)} {teams[x].name} (Qualified)')
                 output += f'#{str(teams[x].rank)} {teams[x].name} (Qualified) \n'
-                
-                print('score: ' + str(teams[x].score) + ' goals: ' + str(teams[x].goals) + 
-                      ' alt_score: ' + str(teams[x].alt_score) + ' date: ' + str(teams[x].reg_date))
             else:
-                print(f'#{str(teams[x].rank)} {teams[x].name}')
                 output += f'#{str(teams[x].rank)} {teams[x].name} \n'
-                
-                print('score: ' + str(teams[x].score) + ' goals: ' + str(teams[x].goals) + 
-                      ' alt_score: ' + str(teams[x].alt_score) + ' date: ' + str(teams[x].reg_date))
-                
-        print('\n')
+            
         output += '\n'
     log.insert(tk.END, output)
 
+
+# retrieve and display details of team
 def display_team(event, text, log):
-    print('Enter name of team to retrieve details: ')
     logging.info('Retrieving team details...')
+    team.Team.update_rankings()
 
     # get text input
     input = text.get('1.0', 'end').strip()
@@ -166,18 +160,18 @@ def display_team(event, text, log):
     text.delete('1.0', 'end')
     log.delete('1.0', 'end')
 
+    # respond with team details if team exists
     try: 
         response = team.Team.get_team_details(input)
-        print(response)    
         logging.info(f'Team details retrieved: \n{response}')
         log.insert(tk.END, f'Team details retrieved: \n{response}')            
     except:
         logging.info(f'Team could not be found: {input}')    
-        print('No such team found, please check for errors and re-enter team name')   
         log.insert(tk.END, f'Team could not be found: {input}')         
 
+
+# edit details of a match
 def edit_match(event, text, log):
-    print('Enter new match information: ')
     logging.info('Editing match details...')
 
     # get text input
@@ -207,6 +201,7 @@ def edit_match(event, text, log):
         error = f'Error: {full_line} - Goals scored should be an integer not {line[3]}'
         logging.info(f'Error editing match due to incorrect input: {full_line}')
 
+    # edit match details if no error
     if error:
         log.insert(tk.END, error)
         return
@@ -216,6 +211,7 @@ def edit_match(event, text, log):
         team_2 = team.Team.get_team(line[1])
         old_details = old_match.get_match_details()
 
+        # deletes old match details from relevant teams
         team_1.remove_match(old_match)
         team_2.remove_match(old_match)
         match.Match.delete_match(old_match)
@@ -223,19 +219,20 @@ def edit_match(event, text, log):
         new_match = match.Match(line[0], line[1], int(line[2]), int(line[3]))
         new_details = new_match.get_match_details()
 
+        # adds new match details to relevant teams
         team_1.add_match(new_match)
         team_2.add_match(new_match)
-        team.Team.update_rankings()
-        print(f'Match Updated: {old_details} to {new_details}')
-        logging.info(f'Match updated from {old_details} to {new_details}')
 
+        # update rankings
+        team.Team.update_rankings()
+
+        logging.info(f'Match updated from {old_details} to {new_details}')
         log.insert(tk.END, f'Match Updated: {old_details} to {new_details}')
     except:
         logging.info(f'Match could not be found: {line}')
-        print('No such match found, please check for errors and re-enter match')
 
+# edit details of a team
 def edit_team(event, text, log):
-    print('Enter new team information (note that team name is not editable): <team name> <registration date> <group number>')
     logging.info(f'Editing team details...')
 
     # get text input
@@ -270,6 +267,7 @@ def edit_team(event, text, log):
             error = f'Error: {full_line} - Invalid datetime: {line[1]} format should be "dd/mm"'
             logging.info(f'Error editing team due to incorrect input: {full_line}')
     
+    # edit team details if no error
     if error:
         log.insert(tk.END, error)
         return
@@ -280,15 +278,17 @@ def edit_team(event, text, log):
         team_to_edit.edit_team(line[0], line[1], line[2])
         new_details = f'{team_to_edit.name} {team_to_edit.reg_date} {str(team_to_edit.grp_num)}'
 
+        # update rankings
         team.Team.update_rankings()
-        print(f'Team Updated: {old_details} to {new_details}')
         logging.info(f'Team updated from {old_details} to {new_details}')
         log.insert(tk.END, f'Team Updated: {old_details} to {new_details}')
 
     except:
         logging.info(f'Team could not be found: {line[0]}')
-        print('No such team found, please check for errors and re-enter team')
+        log.insert(f'Group could not be found')
 
+
+# clear all data
 def clear():
 
     logging.info(f'Clearing all data...')

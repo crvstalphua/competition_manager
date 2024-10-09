@@ -47,6 +47,7 @@ class Team:
             self.losses -= 1
         self.update_score()
 
+    # calculate and update score and alternate score of a team
     def update_score(self):
         self.score = self.wins * 3 + self.draws * 1 + self.losses * 0
         self.alt_score = self.wins * 5 + self.draws * 3 + self.losses * 1
@@ -54,10 +55,13 @@ class Team:
     def edit_team(self, name, reg_date, grp_num):
         self.reg_date = reg_date
         if self.grp_num != grp_num:
+            if grp_num not in Team.__groups:
+                Team.__groups[grp_num] = list()
             Team.__groups[self.grp_num].remove(self)
             Team.__groups[grp_num].append(self)
             self.grp_num = grp_num
 
+    # based on group number, sort the teams based on the the given criteria to obtain the qualification rankings
     @classmethod
     def update_rankings(cls):
         ordered_grps = dict(sorted(Team.get_groups().items()))
@@ -81,6 +85,7 @@ class Team:
     def get_groups(cls):
         return cls.__groups
     
+    # obtain team name, registration date, group number, matches played and qualification outcome of specified team
     @classmethod
     def get_team_details(cls, name):
         team = Team.get_team(name)

@@ -1,4 +1,4 @@
-from functions import input_teams, input_matches, display_rankings, display_team, edit_match, edit_team, clear, switch_frames
+from functions import input_teams, input_matches, display_rankings, display_team, edit_match, edit_team, clear
 import logging
 import tkinter as tk
 
@@ -6,6 +6,7 @@ logging.basicConfig(filename='comp_manager.log', level=logging.INFO, format='%(a
 
 def main():
 
+    # root frame
     root = tk.Tk()
     root.title('Competition Manager')
     root.geometry('800x500')
@@ -13,7 +14,7 @@ def main():
     root.configure(background='azure3')
 
     
-    # team input page
+    # team input frame
     team_page = tk.Frame(root, background='azure3')
     
     t_label = tk.Text(team_page, font=('Ariel', '18'), height=1, width=70, bg='gray', fg='white')
@@ -35,7 +36,7 @@ def main():
     t_return_button.pack(side=tk.BOTTOM, pady=10)
    
 
-    # match input page
+    # match input frame
     match_page = tk.Frame(root, background='azure3')
 
     m_label = tk.Text(match_page, font=('Ariel', '18'), height=1, width=70, bg='gray', fg='white')
@@ -57,7 +58,7 @@ def main():
     m_return_button.pack(side=tk.BOTTOM, pady=10)
     
 
-    # ranking display page
+    # ranking display frame
     ranking_page = tk.Frame(root, background='azure3')
 
     r_label = tk.Text(ranking_page, font=('Ariel', '18'), height=1, width=70, bg='gray', fg='white')
@@ -71,7 +72,7 @@ def main():
     r_display_button.pack(side=tk.BOTTOM, pady=10)
 
 
-    # team details page
+    # team details frame
     team_details_page = tk.Frame(root, background='azure3')
 
     td_label = tk.Text(team_details_page, font=('Ariel', '18'), height=1, width=70, bg='gray', fg='white')
@@ -93,7 +94,7 @@ def main():
     td_return_button.pack(side=tk.BOTTOM, pady=10)
 
 
-    # team edit page
+    # team edit frame
     team_edit_page = tk.Frame(root, background='azure3')
 
     te_label = tk.Text(team_edit_page, font=('Ariel', '18'), height=1, width=70, bg='gray', fg='white')
@@ -115,7 +116,7 @@ def main():
     te_return_button.pack(side=tk.BOTTOM, pady=10)
 
 
-    # match edit page
+    # match edit frame
     match_edit_page = tk.Frame(root, background='azure3')
     
     me_label = tk.Text(match_edit_page, font=('Ariel', '18'), height=1, width=70, bg='gray', fg='white')
@@ -137,7 +138,7 @@ def main():
     me_return_button.pack(side=tk.BOTTOM, pady=10)
 
 
-    # clear page
+    # clear frame
     clear_page = tk.Frame(root, background='azure3')
 
     c_label = tk.Label(clear_page, text='Data Cleared', background='azure3', font=('Ariel', '18', 'bold'))
@@ -148,7 +149,7 @@ def main():
 
     
 
-    # menu page
+    # menu frame
     menu_page = tk.Frame(root, background='azure3')
     menu_page.pack()
 
@@ -173,18 +174,6 @@ def main():
     clear_button.pack(pady=10)
 
     root.mainloop()
-    '''
-    input_teams()
-    input_matches()
-    display_rankings()
-    display_team()
-    edit_match()
-    edit_team()
-    display_rankings()
-    clear()
-    display_team()
-    display_rankings()
-    '''
 
     
 if __name__ == '__main__':

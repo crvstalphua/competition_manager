@@ -23,6 +23,7 @@ class Match:
             elif match.team_2 == team_1 and match.team_1 == team_2:
                 return match
     
+    # based on a given match, obtain number of goals and result of match for specific team
     def get_result(self, team):
         if team.name == self.team_1:
             if self.goals_1 > self.goals_2:
