@@ -1,3 +1,5 @@
+import team
+
 class Match:
     __matches = list()
 
@@ -47,4 +49,5 @@ class Match:
     @classmethod
     def delete_all_matches(cls):
         matches = cls.get_matches()
+        team.Team.delete_all_team_matches()
         matches.clear()

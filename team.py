@@ -84,13 +84,15 @@ class Team:
     @classmethod
     def get_team_details(cls, name):
         team = Team.get_team(name)
-        outcome = 'Did not qualify'
-        if team.rank <= 4: 
+        if team.rank > 4:
+            outcome = 'Did not qualify'
+        elif 0 < team.rank <= 4: 
             outcome = 'Qualified'
         matches = ''
         for match in team.matches:
-            matches += '- ' + match.get_match_details() + '\n'
-        return 'Team name: ' + team.name + '\n' + 'Registration date: ' + team.reg_date + '\n' + 'Group number: ' + str(team.grp_num) + '\n' + 'Matches played: ' + '\n' + matches + 'Outcome: ' + outcome
+            matches += f'- {match.get_match_details()} \n'
+        return f'Team name {team.name} \nRegistration date: {team.reg_date} \nGroup number: {str(team.grp_num)} \nMatches played: \n {matches}Outcome: {outcome}'
+
         
     @classmethod
     def delete_all_teams(cls):
@@ -98,3 +100,10 @@ class Team:
         teams.clear()
         groups = cls.get_groups()
         groups.clear()
+
+    @classmethod
+    def delete_all_team_matches(cls):
+        teams = cls.get_teams()
+        for t in teams:
+            t.matches.clear()
+            t.rank = 0

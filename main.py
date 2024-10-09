@@ -10,6 +10,7 @@ def main():
     edit_team()
     display_rankings()
     clear()
+    display_team()
     display_rankings()
 
     
