@@ -1,5 +1,7 @@
 from functions import input_teams, input_matches, display_rankings, display_team, edit_match, edit_team, clear
-import team
+import logging
+
+logging.basicConfig(filename='comp_manager.log', level=logging.INFO, format='%(asctime)s %(message)s', filemode='w')
 
 def main():
     input_teams()
