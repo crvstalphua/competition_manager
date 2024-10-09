@@ -91,9 +91,8 @@ class Team:
         matches = ''
         for match in team.matches:
             matches += f'- {match.get_match_details()} \n'
-        return f'Team name {team.name} \nRegistration date: {team.reg_date} \nGroup number: {str(team.grp_num)} \nMatches played: \n {matches}Outcome: {outcome}'
+        return f'Team name: {team.name} \nRegistration date: {team.reg_date} \nGroup number: {str(team.grp_num)} \nMatches played: \n{matches}Outcome: {outcome}'
 
-        
     @classmethod
     def delete_all_teams(cls):
         teams = cls.get_teams()
