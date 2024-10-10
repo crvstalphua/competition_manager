@@ -20,6 +20,7 @@ Teams can be added, with their name, registration date and competition group num
 ## Usage Notes
 - Multiple teams and matches can be added in one input
 - Only one team and match can be edited in one go
+- Logs can be viewed in comp_manager.log with each run
 
 ## Some Assumptions Made
 - Team names cannot be edited as they are used to identify the teams
