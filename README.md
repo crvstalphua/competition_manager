@@ -9,13 +9,12 @@ Teams can be added, with their name, registration date and competition group num
 - If on Linux, Tkinter to be installed with:  ```sudo apt-get install python3-tk```
 
 ## To Run Application:
-1. Clone the responsitory and navigate to your directory
+1. Clone the responsitory
     ```
     git clone https://github.com/crvstalphua/competition_manager.git
-    cd competition manager
     ```
 
-2. Run the application with ```python main.py``` or ```python3 main.py``` if you have multiple versions of python
+2. Run the application with ```python competition_manager/main.py``` or ```python3 competition_manager/main.py``` if you have multiple versions of python
 
 ## Usage Notes
 - Multiple teams and matches can be added in one input
