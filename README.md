@@ -17,6 +17,10 @@ Teams can be added, with their name, registration date and competition group num
 
 2. Run the application with ```python main.py``` or ```python3 main.py``` if you have multiple versions of python
 
+## Usage Notes
+- Multiple teams and matches can be added in one input
+- Only one team and match can be edited in one go
+
 ## Some Assumptions Made
 - Team names cannot be edited as they are used to identify the teams
 - If any team/match input is invalid in the multi-line input, it will be skipped. This application allows for teams and matches to be added at any point, not just in the first round
