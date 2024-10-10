@@ -1,4 +1,4 @@
-# competition_manager
+# Competition Manager
 
 This application allows users to keep track of the results from a competition. Users will be able to add and edit teams and match details, their rankings and qualifications in the competition can then be displayed.
 
